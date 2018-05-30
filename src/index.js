@@ -17,7 +17,7 @@ if(module.hot){
     });
 }
 
-function renderWithHotReload (RootElement){
+function renderWithHotReload(RootElement){
     ReactDom.render(
         <AppContainer>
             {RootElement}
