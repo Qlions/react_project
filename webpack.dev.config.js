@@ -19,7 +19,21 @@ module.exports = {
             test: /\.js$/,
             use: ["babel-loader?cacheDirectory=true"],
             include: path.join(__dirname, "src")
-        }]
+        },
+        {
+            test: /\.css$/,
+            use: ["style-loader", "css-loader"]
+        },
+        {
+            test: /\.(png|jpg|gif)$/,
+            use: [{
+                loader: 'url-loader',
+                options: {
+                    limit: 8192
+                }
+            }]
+        }
+    ]
     },
 
     //webpack-dev-server
