@@ -8,7 +8,7 @@ function getUserInfoRequest(){
     }
 }
 
-function getUserInfoSuccess (){
+function getUserInfoSuccess (userInfo){
     return {
         type: GET_USER_INFO_SUCCESS,
         userInfo: userInfo
@@ -21,20 +21,22 @@ function getUserInfoFail (){
     }
 }
 
-
-export function getUserInfo(){
+export function getUserInfo() {
     return function (dispatch) {
         dispatch(getUserInfoRequest());
-        return fetch("http://localhost:8080/api/user.json")
-        .then((response =>{
-            return response.json()
-        }))
-        .then((json) => {
-            dispatch(getUserInfoSuccess(json))
-        }
-    ).catch(()=>{
-        dispatch(getUserInfoFail());
-    })
 
+        return fetch('http://localhost:8080/api/user.json')
+            .then((response => {
+                return response.json()
+            }))
+            .then((json) => {
+                    dispatch(getUserInfoSuccess(json))
+                }
+            ).catch(
+                () => {
+                    dispatch(getUserInfoFail());
+                }
+            )
     }
 }
+

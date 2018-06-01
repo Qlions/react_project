@@ -36,7 +36,10 @@ module.exports = {
             component: path.join(__dirname, "src/component"),
             router: path.join(__dirname, "src/router")
         }
-    }
+    },
+
+    //添加报错信息
+    devtool: "inline-source-map"
     
 }
 
