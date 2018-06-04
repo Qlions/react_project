@@ -1,17 +1,28 @@
 const path = require('path');
-
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+var webpack = require("webpack");
 module.exports = {
     
     // 配置入口
-    entry: [
+    entry: {
+        
+       app: [
         "react-hot-loader/patch",
+        // 入口文件
         path.join(__dirname, "./src/index.js")
-    ],
-
+       ],
+       vendor: ["react", "react-router-dom", 'redux', "react-dom", "react-redux"]
+       
+},
+   
+    
     // 输出到dist文件夹 输出名字问bundle.js
     output: {
         path: path.join(__dirname, "./dist"),
-        filename: "bundle.js"
+        // 打包添加hash 名字
+        filename: "[name].[hash].js",
+        // 打包 改名字为 文件名字
+        chunkFilename: '[name].[chunkhash].js'
     },
     
     module: {
@@ -53,7 +64,18 @@ module.exports = {
     },
 
     //添加报错信息
-    devtool: "inline-source-map"
+    devtool: "inline-source-map",
+
+    //更改index.html 路径 配合 缓存
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: "index.html",
+            template: path.join(__dirname, "src/index.html")
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor"
+        }),
+]
     
 }
 

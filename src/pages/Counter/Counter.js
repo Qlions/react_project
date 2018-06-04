@@ -12,7 +12,7 @@ class Counter extends Component {
                 </button>
                 <button onClick={() => this.props.decrement()}>自减
                 </button>
-                <button onClick={() => this.props.reset()}>重置
+                <button onClick={() => this.props.reset()}>重置(RESET)
                 </button>
             </div>
         )
