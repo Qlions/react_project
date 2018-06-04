@@ -26,6 +26,7 @@ module.exports = {
     },
     
     module: {
+        // 编译js/css/img
         rules: [{
             test: /\.js$/,
             use: ["babel-loader?cacheDirectory=true"],

@@ -1,6 +1,10 @@
 const path = require('path');
+
+// 每次自动把js 插入到 index.html 里面 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+
+// 文件压缩
 const UglifyJSPlugin = require("uglifyjs-webpack-plugin");
 
 // 每次打包之前清理dist 文件需要的模块
@@ -18,12 +22,15 @@ module.exports = {
         vendor: ['react', 'react-router-dom', 'redux', 'react-dom', 'react-redux']
     },
     output: {
+        
+        // 入口文件
         path: path.join(__dirname, './dist'),
         filename: '[name].[chunkhash].js',
         chunkFilename: '[name].[chunkhash].js'
     },
     module: {
         rules: [
+
             {
             test: /\.js$/,
             use: ['babel-loader'],
@@ -42,6 +49,7 @@ module.exports = {
               use: ["css-loader?modules&localIdentName=[local]-[hash:base64:5]", "postcss-loader"]
             })
           },
+        //   8192 小于8k的图片转成base64
          {
             test: /\.(png|jpg|gif)$/,
             use: [{
@@ -53,23 +61,31 @@ module.exports = {
         }]
     },
     plugins: [
+        // 每次自动把js 插入到 index.html 里面 
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.join(__dirname, 'src/index.html')
         }),
+
+        // 提取公共代码
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor'
         }),
+
+        // 文件压缩
         new UglifyJSPlugin(),
         new webpack.DefinePlugin(({
             "process.env": {
                 "NODE_ENV": JSON.stringify("production")
             }
         })),
+
+         // 优化缓存
         new webpack.HashedModuleIdsPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: "runtime"
         }),
+
         //每次打包之前清空dist 文件夹
         new CleanWebpackPlugin(["dist"]),
 
@@ -82,6 +98,7 @@ module.exports = {
 
     resolve: {
         alias: {
+            // 配置路径
             pages: path.join(__dirname, 'src/pages'),
             component: path.join(__dirname, 'src/component'),
             router: path.join(__dirname, 'src/router')
