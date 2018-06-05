@@ -1,4 +1,6 @@
 .page-box{
     border: 1px solid red;
     background: green;
+    display: block;
+    border-radius: 10px;
 }
